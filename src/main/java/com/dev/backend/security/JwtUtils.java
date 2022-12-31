@@ -22,9 +22,10 @@ public class JwtUtils {
     private int ttl = 10000;
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(JwtUtils.class);
+
     public String token(UserAccountAuth userAuth) {
 
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .setSubject(userAuth.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + ttl))
@@ -42,7 +43,7 @@ public class JwtUtils {
         } catch (SignatureException ex) {
 
         } catch (ExpiredJwtException ex) {
-            request.setAttribute("auth-token-validation","expired token");
+            request.setAttribute("auth-token-validation", "expired token");
         } catch (UnsupportedJwtException ex) {
 
         }
